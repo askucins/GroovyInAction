@@ -12,14 +12,25 @@ class Money {
                 "cannot add $other.currency to $currency")
         }
         return new Money(amount + other.amount, currency)
-    }        
+    }
+
+    Money plus (Integer more) {
+        return new Money(amount + more, currency)
+    }
 }
 
 Money  buck = new Money(1, 'USD')
-assert buck 
+assert buck
 assert buck        == new Money(1, 'USD')              //#3
 assert buck + buck == new Money(2, 'USD')              //#4
 //#1 Overrides == operator
 //#2 Implements + operator
 //#3 Use overridden ==
 //#4 Use implemented +
+
+assert buck + 1 == new Money(2, 'USD')
+try {
+    1 + buck == new Money(2, 'USD')
+} catch (e) {
+    assert e instanceof MissingMethodException
+}
